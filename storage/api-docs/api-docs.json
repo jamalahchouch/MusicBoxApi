@@ -1,0 +1,767 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "MusicBox API",
+        "description": "Documentation interactive de l'API MusicBox (Artistes, Albums, Chansons)",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Serveur local"
+        }
+    ],
+    "paths": {
+        "/api/albums": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Lister tous les albums",
+                "description": "Retourne la liste paginée des albums",
+                "operationId": "735609843dcfb89ee4e12e340eddca25",
+                "responses": {
+                    "200": {
+                        "description": "Succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Thriller"
+                                            },
+                                            "artist_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "release_year": {
+                                                "type": "integer",
+                                                "example": 1982
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Créer un nouvel album",
+                "description": "Ajoute un album dans la base de données",
+                "operationId": "2252aa8fd63b7d2fa1203c1735943d46",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "artist_id",
+                                    "release_year"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Thriller"
+                                    },
+                                    "artist_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "release_year": {
+                                        "type": "integer",
+                                        "example": 1982
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Album créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Thriller"
+                                        },
+                                        "artist_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "release_year": {
+                                            "type": "integer",
+                                            "example": 1982
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/albums/{id}": {
+            "put": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Mettre à jour un album",
+                "description": "Met à jour les informations d’un album existant",
+                "operationId": "7ce4b18f8619c4569c95160d86e23ff3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'album",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Bad"
+                                    },
+                                    "artist_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "release_year": {
+                                        "type": "integer",
+                                        "example": 1987
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Album mis à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Bad"
+                                        },
+                                        "artist_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "release_year": {
+                                            "type": "integer",
+                                            "example": 1987
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Album non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Supprimer un album",
+                "description": "Supprime un album de la base de données",
+                "operationId": "cabfc7c152115607d310827d46a82d5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'album",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Album supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Album non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/artists": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Liste des artistes",
+                "operationId": "2c8aed1387cca1c65d98da7ee11ac926",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de page pour pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Filtrer par genre musical",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste paginée d'artistes"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Créer un nouvel artiste",
+                "description": "Ajoute un artiste dans la base de données",
+                "operationId": "83d2888bdc6fac66b9a7cc81c4c950fb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "genre"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Freddie Mercury"
+                                    },
+                                    "genre": {
+                                        "type": "string",
+                                        "example": "Rock"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Artiste créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Freddie Mercury"
+                                        },
+                                        "genre": {
+                                            "type": "string",
+                                            "example": "Rock"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requête invalide"
+                    }
+                }
+            }
+        },
+        "/api/artists/{id}": {
+            "put": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Mettre à jour un artiste",
+                "description": "Met à jour les informations d’un artiste existant",
+                "operationId": "0f6af6d6ced6c49d7125ca25a311215c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'artiste",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Mick Jagger"
+                                    },
+                                    "genre": {
+                                        "type": "string",
+                                        "example": "Rock"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Artiste mis à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Mick Jagger"
+                                        },
+                                        "genre": {
+                                            "type": "string",
+                                            "example": "Rock"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Artiste non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Supprimer un artiste",
+                "description": "Supprime un artiste de la base de données",
+                "operationId": "4d8899f5b7d1243c5e3eaf300f05f9f7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'artiste",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Artiste supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Artiste non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/songs": {
+            "get": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Lister toutes les chansons",
+                "description": "Retourne la liste paginée des chansons",
+                "operationId": "0388bb28c35eec49b8b492d169ce3575",
+                "responses": {
+                    "200": {
+                        "description": "Succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Billie Jean"
+                                            },
+                                            "album_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "duration": {
+                                                "type": "string",
+                                                "example": "04:15"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Créer une nouvelle chanson",
+                "description": "Ajoute une chanson dans la base de données",
+                "operationId": "2f1970b82d91cc715578d972189f19cb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "album_id",
+                                    "duration"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Billie Jean"
+                                    },
+                                    "album_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "04:15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Chanson créée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Billie Jean"
+                                        },
+                                        "album_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "duration": {
+                                            "type": "string",
+                                            "example": "04:15"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/songs/{id}": {
+            "put": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Mettre à jour une chanson",
+                "description": "Met à jour les informations d’une chanson existante",
+                "operationId": "70cdd4af6ae4deea2a031741a1679cf5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la chanson",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Beat It"
+                                    },
+                                    "album_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "04:18"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Chanson mise à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Beat It"
+                                        },
+                                        "album_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "duration": {
+                                            "type": "string",
+                                            "example": "04:18"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Chanson non trouvée"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Supprimer une chanson",
+                "description": "Supprime une chanson de la base de données",
+                "operationId": "829c1a52ae5013ce3ff4b9829a31485f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la chanson",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Chanson supprimée avec succès"
+                    },
+                    "404": {
+                        "description": "Chanson non trouvée"
+                    }
+                }
+            }
+        },
+        "/api/ad/songs/search": {
+            "get": {
+                "tags": [
+                    "Songs"
+                ],
+                "summary": "Rechercher des chansons",
+                "description": "Recherche des chansons par titre ou par artiste (avec pagination)",
+                "operationId": "cd59d50d5bbc060ff87cd770b2c97fe7",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Mot-clé à rechercher (titre de la chanson ou nom de l'artiste)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Queen"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de page pour la pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Résultats trouvés",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Bohemian Rhapsody"
+                                                    },
+                                                    "album": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 10
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "A Night at the Opera"
+                                                            },
+                                                            "artist": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 3
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Queen"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "last_page": {
+                                            "type": "integer",
+                                            "example": 5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Paramètre query manquant"
+                    },
+                    "404": {
+                        "description": "Aucun résultat trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Artists",
+            "description": "Gestion des artistes"
+        },
+        {
+            "name": "Albums",
+            "description": "Gestion des albums"
+        },
+        {
+            "name": "Songs",
+            "description": "Gestion des chansons"
+        }
+    ]
+}
